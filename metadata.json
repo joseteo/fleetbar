@@ -2,6 +2,7 @@
   "uuid": "fleetbar@joseteo.github.com",
   "name": "Fleetbar",
   "description": "Server health at a glance. Keep a named, colored status indicator for each project in the top bar, with a smaller dot for every service so a failing component is visible without opening the menu. Group projects by hosting provider.\n\nMonitor HTTP health responses, TCP ports and optional local monitor files. Inspect individual service states, response times and the last check. Open project folders, websites and SSH terminals from one place.\n\nUses your GNOME theme and language. Configurable polling, timeouts, compact labels, service dots and optional outage notifications. No account, telemetry or cloud service required. GNOME 46.",
+  "url": "https://github.com/joseteo/fleetbar",
   "shell-version": [
     "46"
   ],

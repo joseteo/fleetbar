@@ -25,7 +25,7 @@ Do not change the UUID after publishing. Do not add Shell versions without testi
 
 ## Before submitting
 
-Set `url` in metadata to the actual public repository where people can read the source and report issues. It is deliberately not invented while that URL is undecided. The submission verifier can run with `--submission` to require it.
+The `url` field in metadata declares the repository where people can read the source and report issues. It must be publicly readable when reviewers inspect the submission; the verifier can run with `--submission` to require the field.
 
 Inspect the generic native screenshots under `docs/screenshots/`, update listing copy in `STORE_LISTING.md`, and choose the screenshot for the GNOME listing. Confirm the maintainer account and publisher rights.
 
