@@ -275,6 +275,7 @@ export function buildPreferences(window, settings) {
     behaviorPage.add(appearance);
     for (const [key, title, subtitle] of [
         ['show-project-labels', _('Show project names'), _('Display each project name beside its status dot')],
+        ['show-service-dots', _('Show service dots'), _('Display one dot per service beside each project')],
         ['show-count', _('Show project count'), _('Online projects / total projects')],
         ['notifications', _('Notify on status changes'), _('Confirmed outages and recoveries, grouped per check')],
     ]) {

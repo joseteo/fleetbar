@@ -3,6 +3,8 @@
 .fleetbar-projects { spacing: 14px; }
 .fleetbar-project { spacing: 5px; }
 .fleetbar-dot { icon-size: 10px; }
+.fleetbar-services { spacing: 3px; margin-left: 2px; }
+.fleetbar-service-dot { icon-size: 8px; }
 .fleetbar-project-label { max-width: 9em; }
 .fleetbar-heading { spacing: 4px; padding: 4px 0; min-width: 310px; }
 .fleetbar-title { font-weight: bold; }

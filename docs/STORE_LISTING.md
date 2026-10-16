@@ -2,18 +2,19 @@
 
 **Name:** Fleetbar
 
-**Summary:** Named status dots for your servers and projects, right in the top bar.
+**Summary:** Named status dots for every project and service, right in the top bar.
 
 **Description:**
 
-Know which project needs attention without opening a dashboard. Fleetbar puts a named, colored status dot for each project in your GNOME top bar. Green means healthy, amber means a partial failure, red means offline, and gray means unknown or stale. Failure labels show how many services are healthy.
+Know which component needs attention without opening a dashboard. Fleetbar puts a named, colored status dot for each project in your GNOME top bar, followed by one smaller dot per service, so the failing component is visible at a glance. Green means healthy, amber means a partial failure, red means offline, and gray means unknown or stale. Failure labels show how many services are healthy.
 
 Expand a project to inspect individual service checks, response times and the last update. Group projects by provider and open websites, local folders or SSH connections from the same menu.
 
 * HTTP health checks with optional JSON response matching
 * TCP instance checks and optional local monitor files
+* One status dot per service, in the same order as the menu
 * Native settings, light/dark themes and English/Spanish translations
-* Adjustable polling, timeouts, compact labels and optional notifications
+* Adjustable polling, timeouts, compact labels, service dots and optional notifications
 * No telemetry, cloud account or subscription
 
 Requires GNOME 46. SSH shortcuts use GNOME Terminal and OpenSSH. Configure your own projects and endpoints in Settings.

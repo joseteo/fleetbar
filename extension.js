@@ -66,7 +66,7 @@ export default class FleetbarExtension extends Extension {
         this._button.add_child(box);
         Main.panel.addToStatusArea(this.uuid, this._button);
         this._settingsSignal = this._settings.connect('changed', (_settings, key) => {
-            if (key === 'show-count' || key === 'show-project-labels')
+            if (key === 'show-count' || key === 'show-project-labels' || key === 'show-service-dots')
                 this._update();
             else if (key === 'refresh-interval')
                 this._schedule();
@@ -327,6 +327,7 @@ export default class FleetbarExtension extends Extension {
         const states = [];
         const descriptions = [];
         const showLabels = this._settings.get_boolean('show-project-labels');
+        const showServiceDots = this._settings.get_boolean('show-service-dots');
         for (const project of this._projects) {
             const services = project.services.map(service => {
                 const key = `${project.id}/${service.id}`;
@@ -340,7 +341,7 @@ export default class FleetbarExtension extends Extension {
             });
             const state = aggregate(services);
             states.push(state);
-            descriptions.push(this._indicators.update(project, services, showLabels));
+            descriptions.push(this._indicators.update(project, services, showLabels, showServiceDots));
             const row = this._projectRows.get(project.id);
             row.icon.icon_name = icons[state];
             row.state.text = stateLabel(state);

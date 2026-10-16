@@ -8,12 +8,25 @@ const fixture = () => [{id: 'p', name: 'Project', group: 'Provider', services: [
 ]}];
 
 test('top bar distinguishes partial failure, offline and unknown without relying on color', () => {
-    const project = {name: 'My production API', panelLabel: 'API'};
-    assert.deepEqual(panelPresentation(project, ['up', 'up']), {state: 'up', online: 2, total: 2, label: 'API'});
+    const project = {name: 'My production API', panelLabel: 'API', services: [
+        {id: 'api', name: 'API'}, {id: 'db', name: 'Database'}]};
+    assert.deepEqual(panelPresentation(project, ['up', 'up']), {state: 'up', online: 2, total: 2, label: 'API',
+        services: [{name: 'API', state: 'up'}, {name: 'Database', state: 'up'}]});
     assert.equal(panelPresentation(project, ['up', 'down']).label, 'API 1/2');
     assert.equal(panelPresentation(project, ['down', 'down']).label, 'API 0/2');
     assert.equal(panelPresentation(project, ['up', 'unknown']).label, 'API ?');
     assert.equal(panelPresentation({name: 'Website'}, ['up']).label, 'Website');
+});
+
+test('the panel keeps one dot state per service in configured order, even when details are missing', () => {
+    const project = {name: 'API', services: [{id: 'api', name: 'API'}, {id: 'worker', name: 'Worker'}]};
+    assert.deepEqual(panelPresentation(project, ['down', 'up']).services,
+        [{name: 'API', state: 'down'}, {name: 'Worker', state: 'up'}]);
+    assert.deepEqual(panelPresentation(project, ['up', 'unknown']).services,
+        [{name: 'API', state: 'up'}, {name: 'Worker', state: 'unknown'}]);
+    assert.deepEqual(panelPresentation(project, []).services, []);
+    assert.deepEqual(panelPresentation({name: 'API'}, ['up', 'down']).services,
+        [{name: '', state: 'up'}, {name: '', state: 'down'}]);
 });
 
 test('editing health values preserves string, numeric, boolean and null response types', () => {

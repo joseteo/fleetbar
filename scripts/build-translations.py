@@ -11,6 +11,8 @@ translations = {
     'A short name such as API or Web. Leave empty to use the project name.': 'Un nombre corto como API o Web. Déjalo vacío para usar el nombre del proyecto.',
     'Show project names': 'Mostrar nombres de proyectos',
     'Display each project name beside its status dot': 'Mostrar el nombre de cada proyecto junto a su indicador de estado',
+    'Show service dots': 'Mostrar puntos de servicio',
+    'Display one dot per service beside each project': 'Mostrar un punto por servicio junto a cada proyecto',
     'Online': 'En línea',
     'Needs attention': 'Requiere atención',
     'Offline': 'Sin conexión',

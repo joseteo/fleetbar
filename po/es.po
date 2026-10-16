@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Fleetbar 1.1.0\n"
+"Project-Id-Version: Fleetbar 1.2.0\n"
 "PO-Revision-Date: 2026-10-16 00:00+0000\n"
 "Last-Translator: Fleetbar maintainers\n"
 "Language-Team: Spanish\n"
@@ -93,6 +93,9 @@ msgstr "No se pudieron guardar los proyectos. Revisa los datos de conexión y lo
 
 msgid "Display each project name beside its status dot"
 msgstr "Mostrar el nombre de cada proyecto junto a su indicador de estado"
+
+msgid "Display one dot per service beside each project"
+msgstr "Mostrar un punto por servicio junto a cada proyecto"
 
 msgid "Edit project"
 msgstr "Editar proyecto"
@@ -294,6 +297,9 @@ msgstr "Mostrar número de proyectos"
 
 msgid "Show project names"
 msgstr "Mostrar nombres de proyectos"
+
+msgid "Show service dots"
+msgstr "Mostrar puntos de servicio"
 
 msgid "Some services need attention"
 msgstr "Algunos servicios requieren atención"
