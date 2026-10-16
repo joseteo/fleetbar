@@ -91,11 +91,8 @@ msgstr "No se pudo abrir esta ubicación"
 msgid "Could not save projects. Check the connection details and file permissions."
 msgstr "No se pudieron guardar los proyectos. Revisa los datos de conexión y los permisos del archivo."
 
-msgid "Display each project name beside its status dot"
-msgstr "Mostrar el nombre de cada proyecto junto a su indicador de estado"
-
-msgid "Display one dot per service beside each project"
-msgstr "Mostrar un punto por servicio junto a cada proyecto"
+msgid "Display each project name beside its status shape"
+msgstr "Mostrar el nombre de cada proyecto junto a su símbolo de estado"
 
 msgid "Edit project"
 msgstr "Editar proyecto"
@@ -292,14 +289,17 @@ msgstr "Ajustes"
 msgid "Shortcuts"
 msgstr "Accesos directos"
 
+msgid "Show one segment per service when a project needs attention"
+msgstr "Muestra un segmento por servicio cuando un proyecto requiere atención"
+
 msgid "Show project count"
 msgstr "Mostrar número de proyectos"
 
 msgid "Show project names"
 msgstr "Mostrar nombres de proyectos"
 
-msgid "Show service dots"
-msgstr "Mostrar puntos de servicio"
+msgid "Show service status"
+msgstr "Mostrar el estado de los servicios"
 
 msgid "Some services need attention"
 msgstr "Algunos servicios requieren atención"
