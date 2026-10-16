@@ -67,7 +67,7 @@ export default class FleetbarExtension extends Extension {
         box.add_child(this._count);
         this._button.add_child(box);
         Main.panel.addToStatusArea(this.uuid, this._button);
-        this._settingsSignal = this._settings.connect('changed', (_settings, key) => {
+        this._settings.connectObject('changed', (_settings, key) => {
             if (key === 'show-count' || key === 'show-project-labels' || key === 'show-service-dots')
                 this._update();
             else if (key === 'refresh-interval')
@@ -79,21 +79,20 @@ export default class FleetbarExtension extends Extension {
                 this._busy = false;
                 this._refresh();
             }
-        });
-        this._button.menu.connect('open-state-changed', (_menu, open) => {
+        }, this);
+        this._button.menu.connectObject('open-state-changed', (_menu, open) => {
             if (open) {
                 this._update();
                 this._refresh();
             }
-        });
+        }, this);
         GLib.mkdir_with_parents(configDirectory, 0o700);
         // File monitors can be unavailable on resource-starved sessions; the
         // extension must still start, only without configuration hot reload.
         this._fileMonitor = null;
-        this._fileMonitorSignal = 0;
         try {
             this._fileMonitor = Gio.File.new_for_path(configDirectory).monitor_directory(Gio.FileMonitorFlags.NONE, null);
-            this._fileMonitorSignal = this._fileMonitor.connect('changed', (_monitor, file) => {
+            this._fileMonitor.connectObject('changed', (_monitor, file) => {
                 if (file.get_path() !== configPath)
                     return;
                 if (this._reloadTimer)
@@ -103,7 +102,7 @@ export default class FleetbarExtension extends Extension {
                     this._load();
                     return GLib.SOURCE_REMOVE;
                 });
-            });
+            }, this);
         } catch (error) {
             console.warn(`Fleetbar: configuration hot reload disabled: ${error.message}`);
         }
@@ -123,20 +122,18 @@ export default class FleetbarExtension extends Extension {
         this._configCancellable = null;
         this._launchCancellable?.cancel();
         this._launchCancellable = null;
-        if (this._fileMonitorSignal)
-            this._fileMonitor.disconnect(this._fileMonitorSignal);
-        this._fileMonitorSignal = 0;
+        this._fileMonitor?.disconnectObject(this);
         this._fileMonitor?.cancel();
         this._fileMonitor = null;
         this._checker?.destroy();
         this._checker = null;
-        if (this._settingsSignal)
-            this._settings.disconnect(this._settingsSignal);
-        this._settingsSignal = 0;
+        this._settings?.disconnectObject(this);
+        this._notificationSource?.disconnectObject(this);
         this._notificationSource?.destroy();
         this._notificationSource = null;
         this._indicators?.destroy();
         this._indicators = null;
+        this._button?.menu.disconnectObject(this);
         this._button?.destroy();
         this._button = null;
         this._settings = null;
@@ -285,7 +282,7 @@ export default class FleetbarExtension extends Extension {
     _notify(body) {
         if (!this._notificationSource) {
             this._notificationSource = new MessageTray.Source({title: _('Fleetbar'), iconName: 'network-server-symbolic'});
-            this._notificationSource.connect('destroy', () => { this._notificationSource = null; });
+            this._notificationSource.connectObject('destroy', () => { this._notificationSource = null; }, this);
             Main.messageTray.add(this._notificationSource);
         }
         const notification = new MessageTray.Notification({source: this._notificationSource, title: _('Fleetbar'), body});

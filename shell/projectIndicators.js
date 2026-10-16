@@ -16,7 +16,7 @@ export class ProjectIndicators {
         this.actor = new St.BoxLayout({style_class: 'fleetbar-projects', y_align: Clutter.ActorAlign.CENTER});
         this._owner = owner;
         this._items = new Map();
-        this._styleSignal = owner.connect('style-changed', () => this._applyColors());
+        owner.connectObject('style-changed', () => this._applyColors(), this);
     }
 
     setProjects(projects) {
@@ -84,8 +84,7 @@ export class ProjectIndicators {
     }
 
     destroy() {
-        this._owner.disconnect(this._styleSignal);
-        this._styleSignal = 0;
+        this._owner.disconnectObject(this);
         this._owner = null;
         this._items.clear();
         this.actor.destroy();
