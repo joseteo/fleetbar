@@ -1,0 +1,15 @@
+[
+  {"id":"website","name":"Website","panelLabel":"Web","group":"Cloud","instance":"web-production","webUrl":"https://example.com","services":[
+    {"id":"instance","name":"Instance","type":"tcp","host":"127.0.0.1","port":9},
+    {"id":"api","name":"API","type":"http","url":"http://127.0.0.1:9/health","expect":{"status":"ok"}},
+    {"id":"db","name":"Database","type":"http","url":"http://127.0.0.1:9/health","expect":{"db":true}}
+  ]},
+  {"id":"workspace","name":"Workspace","group":"VPS","instance":"workspace-production","services":[
+    {"id":"api","name":"API","type":"http","url":"http://127.0.0.1:9/health","expect":{"status":"ok"}},
+    {"id":"worker","name":"Worker","type":"http","url":"http://127.0.0.1:9/health","expect":{"worker":"ok"}}
+  ]},
+  {"id":"homelab","name":"Home Lab","group":"Local / VPN","instance":"home-server","services":[
+    {"id":"api","name":"API","type":"http","url":"http://127.0.0.1:9/health","expect":{"status":"ok"}},
+    {"id":"storage","name":"Storage","type":"http","url":"http://127.0.0.1:9/health","expect":{"storage":"ok"}}
+  ]}
+]

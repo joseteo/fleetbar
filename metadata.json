@@ -1,0 +1,11 @@
+{
+  "uuid": "fleetbar@joseteo.github.com",
+  "name": "Fleetbar",
+  "description": "Server health at a glance. Keep a named, colored status indicator for each project in the top bar, grouped by hosting provider in the menu.\n\nMonitor HTTP health responses, TCP ports and optional local monitor files. Inspect individual service states, response times and the last check. Open project folders, websites and SSH terminals from one place.\n\nUses your GNOME theme and language. Configurable polling, timeouts, compact labels and optional outage notifications. No account, telemetry or cloud service required. GNOME 46.",
+  "shell-version": [
+    "46"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.fleetbar",
+  "gettext-domain": "fleetbar",
+  "version-name": "1.1.0"
+}

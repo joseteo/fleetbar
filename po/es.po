@@ -1,0 +1,332 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Fleetbar 1.1.0\n"
+"PO-Revision-Date: 2026-10-16 00:00+0000\n"
+"Last-Translator: Fleetbar maintainers\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "A hostname or label to identify this server"
+msgstr "Un nombre de equipo o una etiqueta para identificar el servidor"
+
+msgid "A service is marked offline after two failed checks. Old observations are shown as unknown."
+msgstr "Un servicio pasa a sin conexión tras dos fallos seguidos. Los resultados antiguos se muestran como desconocidos."
+
+msgid "A short name such as API or Web. Leave empty to use the project name."
+msgstr "Un nombre corto como API o Web. Déjalo vacío para usar el nombre del proyecto."
+
+msgid "Add a project in Settings to get started"
+msgstr "Añade un proyecto en Ajustes para empezar"
+
+msgid "Add at least one service"
+msgstr "Añade al menos un servicio"
+
+msgid "Add project"
+msgstr "Añadir proyecto"
+
+msgid "Add separate checks for the instance, API and its dependencies."
+msgstr "Añade comprobaciones independientes para la instancia, la API y sus dependencias."
+
+msgid "Add service"
+msgstr "Añadir servicio"
+
+msgid "All systems operational"
+msgstr "Todos los sistemas operativos"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Cannot connect"
+msgstr "No se puede conectar"
+
+msgid "Check every (seconds)"
+msgstr "Comprobar cada (segundos)"
+
+msgid "Check is out of date"
+msgstr "Comprobación desactualizada"
+
+msgid "Check type"
+msgstr "Tipo de comprobación"
+
+msgid "Checking…"
+msgstr "Comprobando…"
+
+msgid "Checks connectivity only. An open port does not prove the application is healthy."
+msgstr "Solo comprueba la conectividad. Un puerto abierto no garantiza que la aplicación funcione."
+
+msgid "Checks unavailable"
+msgstr "Comprobaciones no disponibles"
+
+msgid "Choose SSH key"
+msgstr "Elegir clave SSH"
+
+msgid "Choose project folder"
+msgstr "Elegir carpeta del proyecto"
+
+msgid "Configuration needs attention"
+msgstr "La configuración requiere atención"
+
+msgid "Confirmed outages and recoveries, grouped per check"
+msgstr "Caídas y recuperaciones confirmadas, agrupadas por comprobación"
+
+msgid "Connect with SSH"
+msgstr "Conectar por SSH"
+
+msgid "Connection timed out"
+msgstr "Tiempo de conexión agotado"
+
+msgid "Connection timeout (seconds)"
+msgstr "Tiempo de espera (segundos)"
+
+msgid "Could not open the terminal"
+msgstr "No se pudo abrir el terminal"
+
+msgid "Could not open this location"
+msgstr "No se pudo abrir esta ubicación"
+
+msgid "Could not save projects. Check the connection details and file permissions."
+msgstr "No se pudieron guardar los proyectos. Revisa los datos de conexión y los permisos del archivo."
+
+msgid "Display each project name beside its status dot"
+msgstr "Mostrar el nombre de cada proyecto junto a su indicador de estado"
+
+msgid "Edit project"
+msgstr "Editar proyecto"
+
+msgid "Edit service"
+msgstr "Editar servicio"
+
+msgid "Enter a name, group and at least one valid service. Check optional URLs and paths."
+msgstr "Introduce un nombre, un grupo y al menos un servicio válido. Revisa las URL y rutas opcionales."
+
+msgid "Enter a service name and valid connection details"
+msgstr "Introduce un nombre de servicio y datos de conexión válidos"
+
+msgid "Fleetbar"
+msgstr "Fleetbar"
+
+msgid "For a nested field, use a dot: components.database.status"
+msgstr "Para campos anidados, usa un punto: components.database.status"
+
+msgid "For example: Hetzner, netcup, Local / Tailscale"
+msgstr "Por ejemplo: Hetzner, netcup, Local / Tailscale"
+
+msgid "For example: deploy@example.com"
+msgstr "Por ejemplo: deploy@example.com"
+
+msgid "For example: ok, healthy, true"
+msgstr "Por ejemplo: ok, healthy, true"
+
+msgid "Grouped by provider in the top bar. Checks never restart or modify your servers."
+msgstr "Agrupados por proveedor en la barra superior. Las comprobaciones no reinician ni modifican los servidores."
+
+msgid "HTTP health check"
+msgstr "Estado por HTTP"
+
+msgid "Health URL"
+msgstr "URL de estado"
+
+msgid "Health check failed"
+msgstr "El servicio no está saludable"
+
+msgid "Health checks"
+msgstr "Comprobaciones de estado"
+
+msgid "Healthy value"
+msgstr "Valor saludable"
+
+msgid "Host"
+msgstr "Servidor"
+
+msgid "Host or SSH alias"
+msgstr "Servidor o alias SSH"
+
+msgid "Identity file (optional)"
+msgstr "Archivo de identidad (opcional)"
+
+msgid "Instance"
+msgstr "Instancia"
+
+msgid "Last checked"
+msgstr "Última comprobación"
+
+msgid "Local monitor"
+msgstr "Monitor local"
+
+msgid "Monitor is confirming status"
+msgstr "El monitor está confirmando el estado"
+
+msgid "Monitor is out of date"
+msgstr "Monitor desactualizado"
+
+msgid "Monitor state file"
+msgstr "Archivo de estado del monitor"
+
+msgid "Monitor unavailable"
+msgstr "Monitor no disponible"
+
+msgid "Monitoring"
+msgstr "Supervisión"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Needs attention"
+msgstr "Requiere atención"
+
+msgid "No projects yet"
+msgstr "Todavía no hay proyectos"
+
+msgid "Not checked yet"
+msgstr "Sin comprobar"
+
+msgid "Notify on status changes"
+msgstr "Notificar los cambios de estado"
+
+msgid "Offline"
+msgstr "Sin conexión"
+
+msgid "Online"
+msgstr "En línea"
+
+msgid "Online projects / total projects"
+msgstr "Proyectos en línea / proyectos totales"
+
+msgid "Open project folder"
+msgstr "Abrir carpeta del proyecto"
+
+msgid "Open website"
+msgstr "Abrir sitio web"
+
+msgid "Opens an interactive terminal using your existing SSH configuration. No commands run automatically."
+msgstr "Abre un terminal interactivo con tu configuración SSH. No se ejecutan órdenes automáticamente."
+
+msgid "Optional locations to open from the panel menu."
+msgstr "Ubicaciones opcionales que puedes abrir desde el menú del panel."
+
+msgid "Panel and notifications"
+msgstr "Panel y notificaciones"
+
+msgid "Port"
+msgstr "Puerto"
+
+msgid "Probe name"
+msgstr "Nombre de la comprobación"
+
+msgid "Project"
+msgstr "Proyecto"
+
+msgid "Project configuration could not be read"
+msgstr "No se pudo leer la configuración de proyectos"
+
+msgid "Project folder"
+msgstr "Carpeta del proyecto"
+
+msgid "Projects"
+msgstr "Proyectos"
+
+msgid "Provider or group"
+msgstr "Proveedor o grupo"
+
+msgid "Reachable"
+msgstr "Accesible"
+
+msgid "Reads a local service monitor. Results older than two minutes become unknown."
+msgstr "Lee los resultados del monitor local. Pasados dos minutos sin actualizar, el estado pasa a desconocido."
+
+msgid "Recovered"
+msgstr "Recuperado"
+
+msgid "Refresh now"
+msgstr "Actualizar ahora"
+
+msgid "Remove"
+msgstr "Eliminar"
+
+msgid "Remove project"
+msgstr "Eliminar proyecto"
+
+msgid "Remove project?"
+msgstr "¿Eliminar el proyecto?"
+
+msgid "Remove service"
+msgstr "Eliminar servicio"
+
+msgid "Repair the configuration file before adding projects."
+msgstr "Repara el archivo de configuración antes de añadir proyectos."
+
+msgid "Response field (optional)"
+msgstr "Campo de la respuesta (opcional)"
+
+msgid "Retrying to confirm"
+msgstr "Reintentando para confirmar"
+
+msgid "SSH connection"
+msgstr "Conexión SSH"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Service"
+msgstr "Servicio"
+
+msgid "Services"
+msgstr "Servicios"
+
+msgid "Settings"
+msgstr "Ajustes"
+
+msgid "Shortcuts"
+msgstr "Accesos directos"
+
+msgid "Show project count"
+msgstr "Mostrar número de proyectos"
+
+msgid "Show project names"
+msgstr "Mostrar nombres de proyectos"
+
+msgid "Some services need attention"
+msgstr "Algunos servicios requieren atención"
+
+msgid "TCP port"
+msgstr "Puerto TCP"
+
+msgid "Top bar label (optional)"
+msgstr "Etiqueta de la barra superior (opcional)"
+
+msgid "Unknown"
+msgstr "Desconocido"
+
+msgid "Use + to add your first server and its services."
+msgstr "Usa + para añadir tu primer servidor y sus servicios."
+
+msgid "Use a read-only health endpoint. Redirects are treated as failures."
+msgstr "Usa un punto de estado de solo lectura. Las redirecciones se consideran fallos."
+
+msgid "Uses your desktop theme, fonts and language automatically."
+msgstr "Usa automáticamente el tema, las fuentes y el idioma del escritorio."
+
+msgid "Waiting for confirmed status"
+msgstr "Esperando la confirmación del estado"
+
+msgid "Waiting for first check"
+msgstr "Esperando la primera comprobación"
+
+msgid "Website"
+msgstr "Sitio web"
+
+msgid "Your servers and projects"
+msgstr "Tus servidores y proyectos"
+
+msgid "services"
+msgstr "servicios"

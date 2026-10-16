@@ -1,0 +1,11 @@
+/* Status colors use semantic theme colors with GNOME palette fallbacks.
+ * Text, surfaces, focus and hover states inherit the Shell theme. */
+.fleetbar-projects { spacing: 14px; }
+.fleetbar-project { spacing: 5px; }
+.fleetbar-dot { icon-size: 10px; }
+.fleetbar-project-label { max-width: 9em; }
+.fleetbar-heading { spacing: 4px; padding: 4px 0; min-width: 310px; }
+.fleetbar-title { font-weight: bold; }
+.fleetbar-info-row { padding: 6px 12px; spacing: 12px; }
+.fleetbar-secondary { opacity: 0.8; font-size: 0.9em; }
+.fleetbar-group { font-weight: bold; padding-top: 8px; opacity: 0.8; }

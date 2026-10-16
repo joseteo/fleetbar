@@ -1,0 +1,7 @@
+schemas/gschemas.compiled
+locale/
+*.zip
+local-projects.json
+private-ids.local
+node_modules/
+dist/

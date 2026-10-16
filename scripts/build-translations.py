@@ -1,0 +1,132 @@
+"""Build the Spanish catalog from the extension's user-facing strings."""
+from pathlib import Path
+import json
+import re
+import subprocess
+
+root = Path(__file__).resolve().parents[1]
+translations = {
+    'Fleetbar': 'Fleetbar',
+    'Top bar label (optional)': 'Etiqueta de la barra superior (opcional)',
+    'A short name such as API or Web. Leave empty to use the project name.': 'Un nombre corto como API o Web. Déjalo vacío para usar el nombre del proyecto.',
+    'Show project names': 'Mostrar nombres de proyectos',
+    'Display each project name beside its status dot': 'Mostrar el nombre de cada proyecto junto a su indicador de estado',
+    'Online': 'En línea',
+    'Needs attention': 'Requiere atención',
+    'Offline': 'Sin conexión',
+    'Unknown': 'Desconocido',
+    'Waiting for first check': 'Esperando la primera comprobación',
+    'Check is out of date': 'Comprobación desactualizada',
+    'Retrying to confirm': 'Reintentando para confirmar',
+    'Reachable': 'Accesible',
+    'Health check failed': 'El servicio no está saludable',
+    'Connection timed out': 'Tiempo de conexión agotado',
+    'Cannot connect': 'No se puede conectar',
+    'Monitor is out of date': 'Monitor desactualizado',
+    'Monitor is confirming status': 'El monitor está confirmando el estado',
+    'Monitor unavailable': 'Monitor no disponible',
+    'Open website': 'Abrir sitio web',
+    'Open project folder': 'Abrir carpeta del proyecto',
+    'Connect with SSH': 'Conectar por SSH',
+    'Could not open the terminal': 'No se pudo abrir el terminal',
+    'Project configuration could not be read': 'No se pudo leer la configuración de proyectos',
+    'Add a project in Settings to get started': 'Añade un proyecto en Ajustes para empezar',
+    'Not checked yet': 'Sin comprobar',
+    'Refresh now': 'Actualizar ahora',
+    'Settings': 'Ajustes',
+    'Could not open this location': 'No se pudo abrir esta ubicación',
+    'Checking…': 'Comprobando…',
+    'Recovered': 'Recuperado',
+    'Checks unavailable': 'Comprobaciones no disponibles',
+    'Configuration needs attention': 'La configuración requiere atención',
+    'No projects yet': 'Todavía no hay proyectos',
+    'All systems operational': 'Todos los sistemas operativos',
+    'Waiting for confirmed status': 'Esperando la confirmación del estado',
+    'Some services need attention': 'Algunos servicios requieren atención',
+    'Last checked': 'Última comprobación',
+    'Save changes': 'Guardar cambios',
+    'Save': 'Guardar',
+    'Choose project folder': 'Elegir carpeta del proyecto',
+    'Choose SSH key': 'Elegir clave SSH',
+    'Select': 'Seleccionar',
+    'Cancel': 'Cancelar',
+    'Edit service': 'Editar servicio',
+    'Add service': 'Añadir servicio',
+    'Service': 'Servicio',
+    'Name': 'Nombre',
+    'Check type': 'Tipo de comprobación',
+    'HTTP health check': 'Estado por HTTP',
+    'TCP port': 'Puerto TCP',
+    'Local monitor': 'Monitor local',
+    'Use a read-only health endpoint. Redirects are treated as failures.': 'Usa un punto de estado de solo lectura. Las redirecciones se consideran fallos.',
+    'Health URL': 'URL de estado',
+    'Response field (optional)': 'Campo de la respuesta (opcional)',
+    'For a nested field, use a dot: components.database.status': 'Para campos anidados, usa un punto: components.database.status',
+    'Healthy value': 'Valor saludable',
+    'For example: ok, healthy, true': 'Por ejemplo: ok, healthy, true',
+    'Checks connectivity only. An open port does not prove the application is healthy.': 'Solo comprueba la conectividad. Un puerto abierto no garantiza que la aplicación funcione.',
+    'Host': 'Servidor',
+    'Port': 'Puerto',
+    'Reads a local service monitor. Results older than two minutes become unknown.': 'Lee los resultados del monitor local. Pasados dos minutos sin actualizar, el estado pasa a desconocido.',
+    'Monitor state file': 'Archivo de estado del monitor',
+    'Probe name': 'Nombre de la comprobación',
+    'Enter a service name and valid connection details': 'Introduce un nombre de servicio y datos de conexión válidos',
+    'Edit project': 'Editar proyecto',
+    'Add project': 'Añadir proyecto',
+    'Project': 'Proyecto',
+    'Provider or group': 'Proveedor o grupo',
+    'For example: Hetzner, netcup, Local / Tailscale': 'Por ejemplo: Hetzner, netcup, Local / Tailscale',
+    'Instance': 'Instancia',
+    'A hostname or label to identify this server': 'Un nombre de equipo o una etiqueta para identificar el servidor',
+    'Shortcuts': 'Accesos directos',
+    'Optional locations to open from the panel menu.': 'Ubicaciones opcionales que puedes abrir desde el menú del panel.',
+    'Website': 'Sitio web',
+    'Project folder': 'Carpeta del proyecto',
+    'SSH connection': 'Conexión SSH',
+    'Opens an interactive terminal using your existing SSH configuration. No commands run automatically.': 'Abre un terminal interactivo con tu configuración SSH. No se ejecutan órdenes automáticamente.',
+    'Host or SSH alias': 'Servidor o alias SSH',
+    'For example: deploy@example.com': 'Por ejemplo: deploy@example.com',
+    'Identity file (optional)': 'Archivo de identidad (opcional)',
+    'Services': 'Servicios',
+    'Add separate checks for the instance, API and its dependencies.': 'Añade comprobaciones independientes para la instancia, la API y sus dependencias.',
+    'Add at least one service': 'Añade al menos un servicio',
+    'Remove service': 'Eliminar servicio',
+    'Enter a name, group and at least one valid service. Check optional URLs and paths.': 'Introduce un nombre, un grupo y al menos un servicio válido. Revisa las URL y rutas opcionales.',
+    'Projects': 'Proyectos',
+    'Your servers and projects': 'Tus servidores y proyectos',
+    'Grouped by provider in the top bar. Checks never restart or modify your servers.': 'Agrupados por proveedor en la barra superior. Las comprobaciones no reinician ni modifican los servidores.',
+    'Could not save projects. Check the connection details and file permissions.': 'No se pudieron guardar los proyectos. Revisa los datos de conexión y los permisos del archivo.',
+    'Repair the configuration file before adding projects.': 'Repara el archivo de configuración antes de añadir proyectos.',
+    'Use + to add your first server and its services.': 'Usa + para añadir tu primer servidor y sus servicios.',
+    'services': 'servicios',
+    'Remove project': 'Eliminar proyecto',
+    'Remove project?': '¿Eliminar el proyecto?',
+    'Remove': 'Eliminar',
+    'Monitoring': 'Supervisión',
+    'Health checks': 'Comprobaciones de estado',
+    'A service is marked offline after two failed checks. Old observations are shown as unknown.': 'Un servicio pasa a sin conexión tras dos fallos seguidos. Los resultados antiguos se muestran como desconocidos.',
+    'Check every (seconds)': 'Comprobar cada (segundos)',
+    'Connection timeout (seconds)': 'Tiempo de espera (segundos)',
+    'Panel and notifications': 'Panel y notificaciones',
+    'Uses your desktop theme, fonts and language automatically.': 'Usa automáticamente el tema, las fuentes y el idioma del escritorio.',
+    'Show project count': 'Mostrar número de proyectos',
+    'Online projects / total projects': 'Proyectos en línea / proyectos totales',
+    'Notify on status changes': 'Notificar los cambios de estado',
+    'Confirmed outages and recoveries, grouped per check': 'Caídas y recuperaciones confirmadas, agrupadas por comprobación',
+}
+strings = set()
+for source in [root / 'extension.js', root / 'prefs/preferences.js', root / 'shell/projectIndicators.js']:
+    strings.update(re.findall(r"_\('([^']*)'\)", source.read_text()))
+missing = strings - translations.keys()
+if missing:
+    raise SystemExit(f'Missing Spanish translations: {sorted(missing)}')
+header = 'msgid ""\nmsgstr ""\n"Project-Id-Version: Fleetbar 1.0\\n"\n"PO-Revision-Date: 2026-10-16 00:00+0000\\n"\n"Last-Translator: Fleetbar maintainers\\n"\n"Language-Team: Spanish\\n"\n"Language: es\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n'
+version = json.loads((root / 'metadata.json').read_text())['version-name']
+header = header.replace('Fleetbar 1.0', f'Fleetbar {version}')
+body = ''.join(f'\nmsgid {json.dumps(key, ensure_ascii=False)}\nmsgstr {json.dumps(translations[key], ensure_ascii=False)}\n' for key in sorted(strings))
+po = root / 'po/es.po'
+po.write_text(header + body)
+mo = root / 'locale/es/LC_MESSAGES/fleetbar.mo'
+mo.parent.mkdir(parents=True, exist_ok=True)
+subprocess.run(['msgfmt', '--check', '-o', str(mo), str(po)], check=True)
+print(f'Compiled {len(strings)} Spanish messages')

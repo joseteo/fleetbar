@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="fleetbar">
+  <schema id="org.gnome.shell.extensions.fleetbar" path="/org/gnome/shell/extensions/fleetbar/">
+    <key name="refresh-interval" type="i">
+      <default>30</default><range min="15" max="300"/>
+      <summary>Seconds between checks</summary>
+    </key>
+    <key name="timeout" type="i">
+      <default>8</default><range min="2" max="30"/>
+      <summary>Timeout per check in seconds</summary>
+    </key>
+    <key name="show-count" type="b"><default>false</default><summary>Show the project count in the panel</summary></key>
+    <key name="show-project-labels" type="b"><default>true</default><summary>Show names beside project status dots</summary></key>
+    <key name="notifications" type="b"><default>false</default><summary>Notify when a service fails or recovers</summary></key>
+  </schema>
+</schemalist>
