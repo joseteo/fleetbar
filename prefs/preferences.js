@@ -271,18 +271,28 @@ export function buildPreferences(window, settings) {
         checks.add(row);
     }
     const appearance = new Adw.PreferencesGroup({title: _('Panel and notifications'),
-        description: _('Uses your desktop theme, fonts and language automatically.')});
+        description: _('Uses your desktop theme, fonts and language automatically. Choose which colors status shapes, segments and dots use.')});
     behaviorPage.add(appearance);
+    const addSwitch = (key, title, subtitle) => {
+        const row = new Adw.SwitchRow({title, subtitle, use_markup: false});
+        settings.bind(key, row, 'active', Gio.SettingsBindFlags.DEFAULT);
+        appearance.add(row);
+    };
     for (const [key, title, subtitle] of [
         ['show-project-labels', _('Show project names'), _('Display each project name beside its status shape')],
         ['show-service-dots', _('Show service status'), _('Show one segment per service when a project needs attention')],
         ['show-count', _('Show project count'), _('Online projects / total projects')],
-        ['notifications', _('Notify on status changes'), _('Confirmed outages and recoveries, grouped per check')],
-    ]) {
-        const row = new Adw.SwitchRow({title, subtitle, use_markup: false});
-        settings.bind(key, row, 'active', Gio.SettingsBindFlags.DEFAULT);
-        appearance.add(row);
-    }
+    ])
+        addSwitch(key, title, subtitle);
+    const schemes = ['fleetbar', 'theme'];
+    const colors = new Adw.ComboRow({title: _('Status colors'), use_markup: false,
+        model: Gtk.StringList.new([_('Fleetbar palette'), _('Theme colors')]),
+        selected: Math.max(0, schemes.indexOf(settings.get_string('status-colors')))});
+    colors.connect('notify::selected', () => settings.set_string('status-colors', schemes[colors.selected]));
+    settings.connect('changed::status-colors', () =>
+        colors.selected = Math.max(0, schemes.indexOf(settings.get_string('status-colors'))));
+    appearance.add(colors);
+    addSwitch('notifications', _('Notify on status changes'), _('Confirmed outages and recoveries, grouped per check'));
     window._serverSettings = settings;
     return {edit, serviceEditor, monitoringPage: behaviorPage};
 }

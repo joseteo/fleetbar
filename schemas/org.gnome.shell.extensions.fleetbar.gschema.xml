@@ -12,6 +12,14 @@
     <key name="show-count" type="b"><default>false</default><summary>Show the project count in the panel</summary></key>
     <key name="show-project-labels" type="b"><default>true</default><summary>Show names beside project status shapes</summary></key>
     <key name="show-service-dots" type="b"><default>true</default><summary>Show a status segment per service when a project needs attention</summary></key>
+    <key name="status-colors" type="s">
+      <default>'fleetbar'</default>
+      <choices>
+        <choice value='fleetbar'/>
+        <choice value='theme'/>
+      </choices>
+      <summary>Source for status glyph, segment and dot colors</summary>
+    </key>
     <key name="notifications" type="b"><default>false</default><summary>Notify when a service fails or recovers</summary></key>
   </schema>
 </schemalist>

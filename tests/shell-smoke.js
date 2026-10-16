@@ -60,10 +60,12 @@ export default class FleetbarSmoke extends Extension {
         assert(website.glyph instanceof St.DrawingArea, 'Projects use drawn shape glyphs');
         assert(website.glyph.state === 'up' && !website.pill.visible, 'Healthy projects collapse the service pill');
         assert(!app._count.visible, 'Default panel does not duplicate the project count');
-        const setTheme = name => {
+        const setTheme = (name, override) => {
             const theme = new St.Theme({application_stylesheet:
                 Gio.File.new_for_path(`/usr/share/gnome-shell/theme/${name}/gnome-shell.css`)});
             theme.load_stylesheet(Gio.File.new_for_path(`${app.path}/stylesheet.css`));
+            if (override)
+                theme.load_stylesheet(Gio.File.new_for_path(`${output}/${override}`));
             St.ThemeContext.get_for_stage(global.stage).set_theme(theme);
         };
         const screenshot = new Shell.Screenshot();
@@ -82,13 +84,28 @@ export default class FleetbarSmoke extends Extension {
             for (const service of item.segments)
                 assert(service.segment.style.includes('background-color:'), 'Service segments have visible status colors');
         }
+        assert(website.glyph._color === '#57e389', 'Fleetbar palette colors dark sessions with bright tones');
+        assert(website.segments[0].segment.style.includes('#57e389'), 'Service segments follow the Fleetbar palette');
         await capture('panel-healthy');
         app._button.menu.open();
         app._projectRows.get('website').item.menu.open();
         await pause(500);
         await capture('menu-dark');
-        setTheme('Yaru-blue');
+        // Ubuntu's Yaru shell theme keeps a dark panel in both variants; load a
+        // light panel like the user's light session so the palette flips too.
+        GLib.file_set_contents(`${output}/light-panel.css`,
+            '#panel { background-color: rgba(243, 247, 251, 1); }\n#panel .panel-button { color: rgba(7, 25, 43, 0.87); }\n');
+        setTheme('Yaru-blue', 'light-panel.css');
         await pause(500);
+        app._update();
+        assert(website.glyph._color === '#38b16a', 'Fleetbar palette meets in the middle on light sessions');
+        app._settings.set_string('status-colors', 'theme');
+        await pause(200);
+        assert(website.glyph._color !== '#38b16a', 'Theme color source replaces the Fleetbar palette live');
+        app._settings.set_string('status-colors', 'fleetbar');
+        await pause(200);
+        assert(website.glyph._color === '#38b16a', 'Fleetbar palette returns when the color source changes back');
+        assert(app._projectRows.get('website').glyph._color === '#38b16a', 'Menu glyphs follow the color source');
         await capture('menu-light');
         app._button.menu.close();
         app._checker.results.set('workspace/worker', {state: 'down', reason: 'connection', checkedAt: Date.now(), failures: 2});
@@ -163,7 +180,7 @@ export default class FleetbarSmoke extends Extension {
         await pause(500);
         assert(app._indicators.actor.get_n_children() === 3, 'Re-enable restores indicators');
         GLib.file_set_contents(`${output}/passed.txt`, 'passed');
-        console.log('FLEETBAR_TEST_PASS: shape glyphs, collapsing service pills, menu status dots, service counts, colors, themes, compact mode, notifications and lifecycle');
+        console.log('FLEETBAR_TEST_PASS: shape glyphs, collapsing service pills, menu status dots, service counts, selectable status color source, themes, compact mode, notifications and lifecycle');
     }
 
     disable() {}

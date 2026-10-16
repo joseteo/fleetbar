@@ -14,7 +14,7 @@ Expand a project to inspect each service with its own colored status dot, respon
 * TCP instance checks and optional local monitor files
 * One status segment per service, in the same order in the top bar and in the menu
 * Native settings, light/dark themes and English/Spanish translations
-* Adjustable polling, timeouts, compact labels, the service status pill and optional notifications
+* Adjustable polling, timeouts, compact labels, the service status pill, a choice of Fleetbar or theme status colors, and optional notifications
 * No telemetry, cloud account or subscription
 
 Requires GNOME 46. SSH shortcuts use GNOME Terminal and OpenSSH. Configure your own projects and endpoints in Settings.

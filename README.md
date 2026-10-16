@@ -16,7 +16,7 @@ Fleetbar shows every project as a named shape-coded glyph in your GNOME top bar 
 | Red | Every service has a confirmed failure |
 | Gray | Checking, unavailable or out of date |
 
-Healthy projects stay calm: one shape glyph and the name. The moment a service fails, a pill of small segments appears beside the project - one segment per service, in the configured order - the failing segment in red (gray while unknown), and the project glyph switching to a triangle or square. The menu repeats every project as the same shape glyph and lists each service as a colored dot with response times. Labels show healthy service counts during failures (`API 2/3`) and `?` when status is uncertain. Names, menu text and screen reader descriptions accompany the shapes and colors. Set a short top bar label for any project, turn names off for a compact row of glyphs, or hide the service pill in Settings.
+Healthy projects stay calm: one shape glyph and the name. The moment a service fails, a pill of small segments appears beside the project - one segment per service, in the configured order - the failing segment in red (gray while unknown), and the project glyph switching to a triangle or square. The menu repeats every project as the same shape glyph and lists each service as a colored dot with response times. Labels show healthy service counts during failures (`API 2/3`) and `?` when status is uncertain. Names, menu text and screen reader descriptions accompany the shapes and colors. Set a short top bar label for any project, turn names off for a compact row of glyphs, hide the service pill in Settings, or let status colors follow your theme instead of the Fleetbar palette.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/states-dark.png">
@@ -37,7 +37,7 @@ Healthy projects stay calm: one shape glyph and the name. The moment a service f
 - Configurable refresh interval and connection timeout. Two failed checks confirm an outage; stale data never counts as healthy.
 - Optional grouped outage and recovery notifications.
 - Shortcuts for websites, local folders and interactive SSH connections.
-- System fonts and theme, light and dark support, English and Spanish translations.
+- System fonts and theme, a choice between the Fleetbar palette and theme-derived status colors, light and dark support, English and Spanish translations.
 - No telemetry, remote account or monitoring subscription.
 
 ## Compatibility
@@ -52,7 +52,7 @@ GNOME Shell **46**. GTK 4.12+ / Libadwaita 1.4+ and libsoup 3 are required. This
 
 On X11, use Alt+F2, type `r`, and press Enter after installation or JavaScript updates. On Wayland, log out and back in. Enable **Fleetbar** in GNOME Extensions if necessary.
 
-Open Fleetbar → Settings → **+** to add a project, its provider and services. Optional top bar labels keep long names compact. Monitoring settings control polling, timeouts, project labels, the service status pill, aggregate count and notifications.
+Open Fleetbar → Settings → **+** to add a project, its provider and services. Optional top bar labels keep long names compact. Monitoring settings control polling, timeouts, project labels, the service status pill, the status color source, aggregate count and notifications.
 
 To import an existing configuration:
 

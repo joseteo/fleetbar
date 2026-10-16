@@ -109,6 +109,9 @@ msgstr "Introduce un nombre de servicio y datos de conexión válidos"
 msgid "Fleetbar"
 msgstr "Fleetbar"
 
+msgid "Fleetbar palette"
+msgstr "Paleta de Fleetbar"
+
 msgid "For a nested field, use a dot: components.database.status"
 msgstr "Para campos anidados, usa un punto: components.database.status"
 
@@ -304,8 +307,14 @@ msgstr "Mostrar el estado de los servicios"
 msgid "Some services need attention"
 msgstr "Algunos servicios requieren atención"
 
+msgid "Status colors"
+msgstr "Colores de estado"
+
 msgid "TCP port"
 msgstr "Puerto TCP"
+
+msgid "Theme colors"
+msgstr "Colores del tema"
 
 msgid "Top bar label (optional)"
 msgstr "Etiqueta de la barra superior (opcional)"
@@ -319,8 +328,8 @@ msgstr "Usa + para añadir tu primer servidor y sus servicios."
 msgid "Use a read-only health endpoint. Redirects are treated as failures."
 msgstr "Usa un punto de estado de solo lectura. Las redirecciones se consideran fallos."
 
-msgid "Uses your desktop theme, fonts and language automatically."
-msgstr "Usa automáticamente el tema, las fuentes y el idioma del escritorio."
+msgid "Uses your desktop theme, fonts and language automatically. Choose which colors status shapes, segments and dots use."
+msgstr "Usa automáticamente el tema, las fuentes y el idioma del escritorio. Elige qué colores usan las formas, los segmentos y los puntos de estado."
 
 msgid "Waiting for confirmed status"
 msgstr "Esperando la confirmación del estado"

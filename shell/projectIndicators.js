@@ -15,6 +15,7 @@ export class ProjectIndicators {
     constructor(owner) {
         this.actor = new St.BoxLayout({style_class: 'fleetbar-projects', y_align: Clutter.ActorAlign.CENTER});
         this._owner = owner;
+        this._scheme = 'fleetbar';
         this._items = new Map();
         owner.connectObject('style-changed', () => this._applyColors(), this);
     }
@@ -46,7 +47,8 @@ export class ProjectIndicators {
         this._applyColors();
     }
 
-    update(project, states, showLabels, showServiceDots) {
+    update(project, states, showLabels, showServiceDots, scheme = 'fleetbar') {
+        this._scheme = scheme;
         const item = this._items.get(project.id);
         const presentation = panelPresentation(project, states);
         item.state = presentation.state;
@@ -77,9 +79,9 @@ export class ProjectIndicators {
             return;
         const node = this._owner.get_theme_node();
         for (const item of this._items.values()) {
-            item.glyph.setState(item.state, statusColor(node, item.state));
+            item.glyph.setState(item.state, statusColor(node, item.state, this._scheme));
             for (const service of item.segments)
-                applyStatusFill(node, service.segment, service.state);
+                applyStatusFill(node, service.segment, service.state, this._scheme);
         }
     }
 

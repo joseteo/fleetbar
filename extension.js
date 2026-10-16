@@ -68,7 +68,7 @@ export default class FleetbarExtension extends Extension {
         this._button.add_child(box);
         Main.panel.addToStatusArea(this.uuid, this._button);
         this._settings.connectObject('changed', (_settings, key) => {
-            if (key === 'show-count' || key === 'show-project-labels' || key === 'show-service-dots')
+            if (key === 'show-count' || key === 'show-project-labels' || key === 'show-service-dots' || key === 'status-colors')
                 this._update();
             else if (key === 'refresh-interval')
                 this._schedule();
@@ -335,6 +335,7 @@ export default class FleetbarExtension extends Extension {
         const descriptions = [];
         const showLabels = this._settings.get_boolean('show-project-labels');
         const showServiceDots = this._settings.get_boolean('show-service-dots');
+        const scheme = this._settings.get_string('status-colors');
         const node = this._button.mapped ? this._button.get_theme_node() : null;
         for (const project of this._projects) {
             const services = project.services.map(service => {
@@ -342,16 +343,16 @@ export default class FleetbarExtension extends Extension {
                 const result = this._checker.results.get(key);
                 const state = effectiveState(result, now, staleAfter);
                 const row = this._serviceRows.get(key);
-                applyStatusColor(node, row.icon, state);
+                applyStatusColor(node, row.icon, state, scheme);
                 row.detail.text = resultLabel(result, state);
                 row.row.accessible_name = `${service.name}: ${row.detail.text}`;
                 return state;
             });
             const state = aggregate(services);
             states.push(state);
-            descriptions.push(this._indicators.update(project, services, showLabels, showServiceDots));
+            descriptions.push(this._indicators.update(project, services, showLabels, showServiceDots, scheme));
             const row = this._projectRows.get(project.id);
-            row.glyph.setState(state, statusColor(node, state));
+            row.glyph.setState(state, statusColor(node, state, scheme));
             row.state.text = stateLabel(state);
             row.item.accessible_name = `${project.name}: ${stateLabel(state)}`;
         }
