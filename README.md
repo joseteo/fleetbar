@@ -2,7 +2,12 @@
 
 **Know which projects need attention, straight from your GNOME top bar.**
 
-Fleetbar gives each project a named status dot and a smaller dot for every service check, so a failing component is visible at a glance. Open the menu for services, response times, providers and shortcuts. Configure your own endpoints and groups in native Libadwaita settings.
+Fleetbar shows every project as a named shape-coded glyph in your GNOME top bar - green circle when healthy, amber triangle while a service needs attention, red square when offline, ring while uncertain - followed by a compact service pill that only appears when something is wrong, so a failing component is visible at a glance. Open the menu for services, response times, providers and shortcuts. Configure your own endpoints and groups in native Libadwaita settings.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/panel-dark.png">
+  <img alt="Fleetbar in a GNOME top bar: a green circle for Web, an amber warning triangle and a green/red service pill for Workspace 1/2, and a red square with two red segments for Home Lab 0/2" src="docs/images/panel-light.png" width="1100">
+</picture>
 
 | Indicator | Meaning |
 | --- | --- |
@@ -11,12 +16,22 @@ Fleetbar gives each project a named status dot and a smaller dot for every servi
 | Red | Every service has a confirmed failure |
 | Gray | Checking, unavailable or out of date |
 
-Each project is followed by one smaller dot per service, in the configured order, matching the service rows in the menu. Labels show healthy service counts during failures (`API 2/3`) and `?` when status is uncertain. Names, menu text and screen reader descriptions accompany the colors. Set a short top bar label for any project, turn names off for a compact row of dots, or hide service dots in Settings.
+Healthy projects stay calm: one shape glyph and the name. The moment a service fails, a pill of small segments appears beside the project - one segment per service, in the configured order - the failing segment in red (gray while unknown), and the project glyph switching to a triangle or square. The menu repeats every project as the same shape glyph and lists each service as a colored dot with response times. Labels show healthy service counts during failures (`API 2/3`) and `?` when status is uncertain. Names, menu text and screen reader descriptions accompany the shapes and colors. Set a short top bar label for any project, turn names off for a compact row of glyphs, or hide the service pill in Settings.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/states-dark.png">
+  <img alt="Fleetbar states at 2.5x zoom: the pill is hidden while healthy, appears with one segment per service when a check fails, and shows a ring and gray segments while status is unknown" src="docs/images/states-light.png" width="1100">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/menu-dark.png">
+  <img alt="The Fleetbar menu: projects with shape glyphs, an expanded project with service rows, colored dots, response times and shortcuts" src="docs/images/menu-light.png" width="560">
+</picture>
 
 ## Features
 
 - Providers and projects grouped in one native panel menu.
-- One smaller status dot per service, so a failing component is visible without opening the menu.
+- Shape-coded project glyphs plus a per-service pill that appears when a check fails, so a failing component is visible without opening the menu.
 - HTTP health checks with exact JSON field matching, TCP connectivity checks, and optional local monitor files.
 - Shared HTTP endpoints are polled once per cycle. At most eight service checks run concurrently.
 - Configurable refresh interval and connection timeout. Two failed checks confirm an outage; stale data never counts as healthy.
@@ -37,7 +52,7 @@ GNOME Shell **46**. GTK 4.12+ / Libadwaita 1.4+ and libsoup 3 are required. This
 
 On X11, use Alt+F2, type `r`, and press Enter after installation or JavaScript updates. On Wayland, log out and back in. Enable **Fleetbar** in GNOME Extensions if necessary.
 
-Open Fleetbar → Settings → **+** to add a project, its provider and services. Optional top bar labels keep long names compact. Monitoring settings control polling, timeouts, project labels, service dots, aggregate count and notifications.
+Open Fleetbar → Settings → **+** to add a project, its provider and services. Optional top bar labels keep long names compact. Monitoring settings control polling, timeouts, project labels, the service status pill, aggregate count and notifications.
 
 To import an existing configuration:
 
@@ -59,7 +74,7 @@ See [config.example.json](config.example.json) for the format. The earlier local
 {"services":{"worker":{"status":"up","failures":0}}}
 ```
 
-A project is online only when all of its checks are healthy. The first failed observation shows Unknown while confirming. Mixed healthy/failed services show Needs attention; all failed services show Offline. Each service dot follows its own check, so the failing component is identifiable in the top bar and repeated with names in the menu. Expired results become Unknown after two refresh intervals plus the timeout. Notifications start after a previously observed healthy/unhealthy state and are off by default.
+A project is online only when all of its checks are healthy. The first failed observation shows Unknown while confirming. Mixed healthy/failed services show Needs attention; all failed services show Offline. Each pill segment follows its own check, so the failing component is identifiable in the top bar and repeated with names in the menu. Expired results become Unknown after two refresh intervals plus the timeout. Notifications start after a previously observed healthy/unhealthy state and are off by default.
 
 ## Privacy and security
 

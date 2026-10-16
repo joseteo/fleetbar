@@ -2,9 +2,9 @@
  * Text, surfaces, focus and hover states inherit the Shell theme. */
 .fleetbar-projects { spacing: 14px; }
 .fleetbar-project { spacing: 5px; }
-.fleetbar-dot { icon-size: 10px; }
-.fleetbar-services { spacing: 3px; margin-left: 2px; }
-.fleetbar-service-dot { icon-size: 8px; }
+.fleetbar-service-pill { spacing: 2px; margin-left: 1px; }
+.fleetbar-service-segment { width: 5px; height: 7px; border-radius: 2px; }
+.fleetbar-menu-dot { icon-size: 12px; }
 .fleetbar-project-label { max-width: 9em; }
 .fleetbar-heading { spacing: 4px; padding: 4px 0; min-width: 310px; }
 .fleetbar-title { font-weight: bold; }

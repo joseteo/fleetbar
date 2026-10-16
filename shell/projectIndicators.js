@@ -4,10 +4,8 @@ import Pango from 'gi://Pango';
 import St from 'gi://St';
 import {gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 import {panelPresentation} from '../lib/model.js';
-
-const darkColors = {up: '#57e389', degraded: '#f8e45c', down: '#ff7b63', unknown: '#c0bfbc'};
-const lightColors = {up: '#1a7f4b', degraded: '#9c6e03', down: '#c01c28', unknown: '#5e5c64'};
-const themeColors = {up: 'success_color', degraded: 'warning_color', down: 'error_color'};
+import {StatusGlyph} from './statusGlyph.js';
+import {applyStatusFill, statusColor} from './statusColors.js';
 
 function stateLabel(state) {
     return {up: _('Online'), degraded: _('Needs attention'), down: _('Offline'), unknown: _('Unknown')}[state];
@@ -26,24 +24,24 @@ export class ProjectIndicators {
         this._items.clear();
         for (const project of projects) {
             const badge = new St.BoxLayout({style_class: 'fleetbar-project', y_align: Clutter.ActorAlign.CENTER});
-            const dot = new St.Icon({icon_name: 'media-record-symbolic', style_class: 'fleetbar-dot',
-                y_align: Clutter.ActorAlign.CENTER});
+            const glyph = new StatusGlyph();
             const label = new St.Label({text: project.panelLabel || project.name, style_class: 'fleetbar-project-label',
                 y_align: Clutter.ActorAlign.CENTER});
             label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
-            const services = new St.BoxLayout({style_class: 'fleetbar-services', y_align: Clutter.ActorAlign.CENTER});
-            const serviceDots = project.services.map(service => {
-                const serviceDot = new St.Icon({icon_name: 'media-record-symbolic',
-                    style_class: 'fleetbar-service-dot', y_align: Clutter.ActorAlign.CENTER});
-                serviceDot.accessible_name = `${service.name}: ${stateLabel('unknown')}`;
-                services.add_child(serviceDot);
-                return {dot: serviceDot, state: 'unknown'};
-            });
-            badge.add_child(dot);
+            const pill = new St.BoxLayout({style_class: 'fleetbar-service-pill', y_align: Clutter.ActorAlign.CENTER});
+            const segments = [];
+            for (const service of project.services) {
+                const segment = new St.Widget({style_class: 'fleetbar-service-segment',
+                    y_align: Clutter.ActorAlign.CENTER});
+                segment.accessible_name = `${service.name}: ${stateLabel('unknown')}`;
+                pill.add_child(segment);
+                segments.push({segment, state: 'unknown'});
+            }
+            badge.add_child(glyph);
             badge.add_child(label);
-            badge.add_child(services);
+            badge.add_child(pill);
             this.actor.add_child(badge);
-            this._items.set(project.id, {badge, dot, label, services, serviceDots, state: 'unknown'});
+            this._items.set(project.id, {badge, glyph, label, pill, segments, state: 'unknown'});
         }
         this._applyColors();
     }
@@ -54,17 +52,19 @@ export class ProjectIndicators {
         item.state = presentation.state;
         item.label.text = presentation.label;
         item.label.visible = showLabels;
-        item.services.visible = showServiceDots;
         const failed = [];
         presentation.services.forEach((service, index) => {
-            const entry = item.serviceDots[index];
+            const entry = item.segments[index];
             if (!entry)
                 return;
             entry.state = service.state;
-            entry.dot.accessible_name = `${service.name}: ${stateLabel(service.state)}`;
+            entry.segment.accessible_name = `${service.name}: ${stateLabel(service.state)}`;
             if (service.state !== 'up')
-                failed.push(entry.dot.accessible_name);
+                failed.push(entry.segment.accessible_name);
         });
+        // The service pill only appears while a project needs attention, so a
+        // fully healthy bar stays quiet and problems draw the eye.
+        item.pill.visible = showServiceDots && presentation.services.some(service => service.state !== 'up');
         const state = stateLabel(item.state);
         item.badge.accessible_name = `${project.name}: ${state}, ${presentation.online}/${presentation.total}`;
         this._applyColors();
@@ -76,26 +76,11 @@ export class ProjectIndicators {
         if (!this._owner.mapped)
             return;
         const node = this._owner.get_theme_node();
-        const foreground = node.get_foreground_color();
-        const colors = foreground.red + foreground.green + foreground.blue > 384 ? darkColors : lightColors;
         for (const item of this._items.values()) {
-            this._colorDot(node, colors, item.dot, item.state);
-            for (const service of item.serviceDots)
-                this._colorDot(node, colors, service.dot, service.state);
+            item.glyph.setState(item.state, statusColor(node, item.state));
+            for (const service of item.segments)
+                applyStatusFill(node, service.segment, service.state);
         }
-    }
-
-    _colorDot(node, colors, dot, state) {
-        let color = colors[state];
-        const key = themeColors[state];
-        if (key) {
-            const [found, themeColor] = node.lookup_color(key, true);
-            if (found)
-                color = themeColor.to_string();
-        }
-        const style = `color: ${color};`;
-        if (dot.style !== style)
-            dot.set_style(style);
     }
 
     destroy() {

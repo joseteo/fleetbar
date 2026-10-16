@@ -54,8 +54,11 @@ export default class FleetbarSmoke extends Extension {
         await app._refresh();
         assert(app._count.text === '3/3', 'Healthy project count');
         assert(app._indicators.actor.get_n_children() === 3, 'One indicator per project');
-        assert(app._indicators._items.get('website').serviceDots.length === 3, 'One dot per service');
-        assert(app._indicators._items.get('workspace').serviceDots.length === 2, 'One dot per service');
+        const website = app._indicators._items.get('website');
+        assert(website.segments.length === 3, 'One pill segment per service');
+        assert(app._indicators._items.get('workspace').segments.length === 2, 'One pill segment per service');
+        assert(website.glyph instanceof St.DrawingArea, 'Projects use drawn shape glyphs');
+        assert(website.glyph.state === 'up' && !website.pill.visible, 'Healthy projects collapse the service pill');
         assert(!app._count.visible, 'Default panel does not duplicate the project count');
         const setTheme = name => {
             const theme = new St.Theme({application_stylesheet:
@@ -75,9 +78,9 @@ export default class FleetbarSmoke extends Extension {
         await pause(500);
         app._update();
         for (const item of app._indicators._items.values()) {
-            assert(item.dot.style.includes('color:'), 'Dots have visible status colors');
-            for (const service of item.serviceDots)
-                assert(service.dot.style.includes('color:'), 'Service dots have visible status colors');
+            assert(item.glyph._color, 'Glyphs resolve a status color');
+            for (const service of item.segments)
+                assert(service.segment.style.includes('background-color:'), 'Service segments have visible status colors');
         }
         await capture('panel-healthy');
         app._button.menu.open();
@@ -92,17 +95,27 @@ export default class FleetbarSmoke extends Extension {
         app._update();
         const partial = app._indicators._items.get('workspace');
         assert(partial.state === 'degraded' && partial.label.text.endsWith('1/2'), 'Partial failure shows service counts');
-        assert(partial.dot.style !== app._indicators._items.get('website').dot.style, 'Warning color differs from healthy');
-        assert(partial.serviceDots.map(service => service.state).join() === 'up,down', 'Service dots track each service');
-        assert(partial.serviceDots[0].dot.style !== partial.serviceDots[1].dot.style, 'The failing service dot stands out');
-        assert(partial.serviceDots[1].dot.accessible_name.includes('Worker'), 'Service dots name the failing service');
+        assert(partial.glyph.state === 'degraded' && website.glyph.state === 'up', 'Glyph shape follows the aggregate state');
+        assert(partial.glyph._color !== website.glyph._color, 'Warning color differs from healthy');
+        assert(partial.pill.visible, 'The service pill appears when a project needs attention');
+        assert(partial.segments.map(service => service.state).join() === 'up,down', 'Pill segments track each service');
+        assert(partial.segments[0].segment.style !== partial.segments[1].segment.style, 'The failing service segment stands out');
+        assert(partial.segments[1].segment.accessible_name.includes('Worker'), 'Segments name the failing service');
+        const workerRow = app._serviceRows.get('workspace/worker');
+        assert(workerRow.icon.icon_name === 'media-record-symbolic', 'Menu service rows use status dots');
+        assert(workerRow.icon.style !== app._serviceRows.get('workspace/api').icon.style, 'Menu dot colors follow each service');
+        const workspaceRow = app._projectRows.get('workspace');
+        assert(workspaceRow.glyph.state === 'degraded' &&
+            workspaceRow.glyph._color !== app._projectRows.get('website').glyph._color,
+            'Menu project glyphs mirror the panel shape and state');
         for (const service of app._projects.find(project => project.id === 'homelab').services)
             results.set(`homelab/${service.id}`, {state: 'down', reason: 'connection', checkedAt: Date.now(), failures: 2});
         app._update();
         const down = app._indicators._items.get('homelab');
         assert(down.state === 'down' && down.label.text.endsWith('0/2'), 'Offline state');
-        assert(down.dot.style !== partial.dot.style, 'Offline color differs from warning');
-        assert(down.serviceDots.every(service => service.state === 'down'), 'Every failing service has its own dot');
+        assert(down.glyph.state === 'down', 'Offline projects draw the square glyph');
+        assert(down.glyph._color !== partial.glyph._color, 'Offline color differs from warning');
+        assert(down.segments.every(service => service.state === 'down'), 'Every failing service has its own segment');
         await pause(500);
         await capture('panel-outage');
         app._settings.set_boolean('show-project-labels', false);
@@ -111,7 +124,11 @@ export default class FleetbarSmoke extends Extension {
         app._settings.set_boolean('show-project-labels', true);
         results.clear();
         app._update();
-        assert(app._indicators._items.get('website').label.text === 'Web ?', 'Unknown is distinct from healthy');
+        const unknownItem = app._indicators._items.get('website');
+        assert(unknownItem.label.text === 'Web ?', 'Unknown is distinct from healthy');
+        assert(unknownItem.glyph.state === 'unknown', 'Unknown projects draw the ring glyph');
+        assert(unknownItem.pill.visible && unknownItem.segments.every(service => service.state === 'unknown'),
+            'Unknown services show gray segments');
         await pause(500);
         await capture('panel-unknown');
         const loading = app._load();
@@ -129,9 +146,9 @@ export default class FleetbarSmoke extends Extension {
         assert(!currentPartial.label.visible, 'Compact mode hides labels');
         app._settings.set_boolean('show-project-labels', true);
         app._settings.set_boolean('show-service-dots', false);
-        assert(!currentPartial.services.visible, 'Service dots can be turned off');
+        assert(!currentPartial.pill.visible, 'Service pill can be turned off');
         app._settings.set_boolean('show-service-dots', true);
-        assert(currentPartial.services.visible, 'Service dots return');
+        assert(currentPartial.pill.visible, 'Service pill returns while a project needs attention');
         app._notify('Notification lifecycle smoke test');
         assert(app._notificationSource, 'Notification source exists');
         app.disable();
@@ -146,7 +163,7 @@ export default class FleetbarSmoke extends Extension {
         await pause(500);
         assert(app._indicators.actor.get_n_children() === 3, 'Re-enable restores indicators');
         GLib.file_set_contents(`${output}/passed.txt`, 'passed');
-        console.log('FLEETBAR_TEST_PASS: project and per-service dots, service counts, colors, themes, compact mode, notifications and lifecycle');
+        console.log('FLEETBAR_TEST_PASS: shape glyphs, collapsing service pills, menu status dots, service counts, colors, themes, compact mode, notifications and lifecycle');
     }
 
     disable() {}

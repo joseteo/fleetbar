@@ -10,8 +10,8 @@
       <summary>Timeout per check in seconds</summary>
     </key>
     <key name="show-count" type="b"><default>false</default><summary>Show the project count in the panel</summary></key>
-    <key name="show-project-labels" type="b"><default>true</default><summary>Show names beside project status dots</summary></key>
-    <key name="show-service-dots" type="b"><default>true</default><summary>Show a status dot per service beside each project</summary></key>
+    <key name="show-project-labels" type="b"><default>true</default><summary>Show names beside project status shapes</summary></key>
+    <key name="show-service-dots" type="b"><default>true</default><summary>Show a status segment per service when a project needs attention</summary></key>
     <key name="notifications" type="b"><default>false</default><summary>Notify when a service fails or recovers</summary></key>
   </schema>
 </schemalist>

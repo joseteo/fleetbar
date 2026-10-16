@@ -13,6 +13,8 @@ import {Checker} from './lib/checker.js';
 import {configDirectory, configPath, readProjectsAsync} from './lib/config.js';
 import {aggregate, effectiveState} from './lib/model.js';
 import {ProjectIndicators} from './shell/projectIndicators.js';
+import {StatusGlyph} from './shell/statusGlyph.js';
+import {applyStatusColor, statusColor} from './shell/statusColors.js';
 
 const icons = {up: 'emblem-ok-symbolic', degraded: 'dialog-warning-symbolic',
     down: 'network-error-symbolic', unknown: 'help-about-symbolic'};
@@ -207,11 +209,11 @@ export default class FleetbarExtension extends Extension {
             section.addMenuItem(groupHeading);
             for (const project of projects) {
                 const item = new PopupMenu.PopupSubMenuMenuItem(project.name);
-                const icon = new St.Icon({icon_name: icons.unknown, style_class: 'popup-menu-icon'});
-                item.insert_child_at_index(icon, 0);
+                const glyph = new StatusGlyph(12);
+                item.insert_child_at_index(glyph, 0);
                 const state = new St.Label({style_class: 'fleetbar-secondary', y_align: Clutter.ActorAlign.CENTER});
                 item.insert_child_below(state, item._triangleBin);
-                this._projectRows.set(project.id, {item, icon, state});
+                this._projectRows.set(project.id, {item, glyph, state});
                 if (project.instance) {
                     const instance = new PopupMenu.PopupMenuItem(project.instance, {reactive: false, can_focus: false});
                     styleInformationRow(instance);
@@ -221,7 +223,7 @@ export default class FleetbarExtension extends Extension {
                 for (const service of project.services) {
                     const row = new PopupMenu.PopupBaseMenuItem({reactive: false, can_focus: false});
                     styleInformationRow(row);
-                    const serviceIcon = new St.Icon({icon_name: icons.unknown, style_class: 'popup-menu-icon'});
+                    const serviceIcon = new St.Icon({icon_name: 'media-record-symbolic', style_class: 'fleetbar-menu-dot'});
                     const title = new St.Label({text: service.name, x_expand: true, y_align: Clutter.ActorAlign.CENTER});
                     const detail = new St.Label({style_class: 'fleetbar-secondary', y_align: Clutter.ActorAlign.CENTER});
                     row.add_child(serviceIcon);
@@ -328,13 +330,14 @@ export default class FleetbarExtension extends Extension {
         const descriptions = [];
         const showLabels = this._settings.get_boolean('show-project-labels');
         const showServiceDots = this._settings.get_boolean('show-service-dots');
+        const node = this._button.mapped ? this._button.get_theme_node() : null;
         for (const project of this._projects) {
             const services = project.services.map(service => {
                 const key = `${project.id}/${service.id}`;
                 const result = this._checker.results.get(key);
                 const state = effectiveState(result, now, staleAfter);
                 const row = this._serviceRows.get(key);
-                row.icon.icon_name = icons[state];
+                applyStatusColor(node, row.icon, state);
                 row.detail.text = resultLabel(result, state);
                 row.row.accessible_name = `${service.name}: ${row.detail.text}`;
                 return state;
@@ -343,7 +346,7 @@ export default class FleetbarExtension extends Extension {
             states.push(state);
             descriptions.push(this._indicators.update(project, services, showLabels, showServiceDots));
             const row = this._projectRows.get(project.id);
-            row.icon.icon_name = icons[state];
+            row.glyph.setState(state, statusColor(node, state));
             row.state.text = stateLabel(state);
             row.item.accessible_name = `${project.name}: ${stateLabel(state)}`;
         }
