@@ -87,18 +87,26 @@ export default class FleetbarExtension extends Extension {
             }
         });
         GLib.mkdir_with_parents(configDirectory, 0o700);
-        this._fileMonitor = Gio.File.new_for_path(configDirectory).monitor_directory(Gio.FileMonitorFlags.NONE, null);
-        this._fileMonitorSignal = this._fileMonitor.connect('changed', (_monitor, file) => {
-            if (file.get_path() !== configPath)
-                return;
-            if (this._reloadTimer)
-                GLib.Source.remove(this._reloadTimer);
-            this._reloadTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 300, () => {
-                this._reloadTimer = 0;
-                this._load();
-                return GLib.SOURCE_REMOVE;
+        // File monitors can be unavailable on resource-starved sessions; the
+        // extension must still start, only without configuration hot reload.
+        this._fileMonitor = null;
+        this._fileMonitorSignal = 0;
+        try {
+            this._fileMonitor = Gio.File.new_for_path(configDirectory).monitor_directory(Gio.FileMonitorFlags.NONE, null);
+            this._fileMonitorSignal = this._fileMonitor.connect('changed', (_monitor, file) => {
+                if (file.get_path() !== configPath)
+                    return;
+                if (this._reloadTimer)
+                    GLib.Source.remove(this._reloadTimer);
+                this._reloadTimer = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 300, () => {
+                    this._reloadTimer = 0;
+                    this._load();
+                    return GLib.SOURCE_REMOVE;
+                });
             });
-        });
+        } catch (error) {
+            console.warn(`Fleetbar: configuration hot reload disabled: ${error.message}`);
+        }
         this._load();
         this._schedule();
     }
