@@ -30,7 +30,7 @@ The `url` field in metadata declares the repository where people can read the so
 
 Inspect the generic native screenshots under `docs/screenshots/`, update listing copy in `STORE_LISTING.md`, and choose the screenshot for the GNOME listing. Confirm the maintainer account and publisher rights.
 
-Upload the verified ZIP through the GNOME Extensions website when the owner is ready. Review and approval belong to the GNOME extension reviewers; this project does not claim to be approved or published.
+The verified ZIP was uploaded through the GNOME Extensions website on 2026-10-17 (https://extensions.gnome.org/extension/11330/fleetbar/). Review and approval belong to the GNOME extension reviewers; this project does not claim to be approved or published. While the first version is pending review, the page is visible only to the signed-in maintainer, and no public listing exists yet.
 
 ## Private installation migration
 
