@@ -34,6 +34,6 @@ The verified ZIP was uploaded through the GNOME Extensions website on 2026-10-17
 
 A leftover project name was found in the Spanish catalog after the first upload. The catalog was corrected on 2026-10-17 and the ZIP was rebuilt (SHA-256 `b9d14357da3b2dc8a1352c2cc985cc08877f6c28af7c6df0e40bc5b0ad33817d`). Upload the corrected artifact from the same listing page so the reviewed files match the repository.
 
-## Private installation migration
+## Migration from the earlier prototype
 
-`scripts/migrate-settings.js` copies the earlier `gnome-servers` configuration into the private Fleetbar configuration if the new file does not exist. It retains the earlier file and imports explicitly changed monitoring preferences. It is development/migration tooling and is excluded from the store ZIP. Disable the old `servers@joseteo.github.com` extension before activating Fleetbar to avoid duplicate indicators.
+`scripts/migrate-settings.js` imports a configuration from an earlier private prototype if the Fleetbar configuration file does not exist. It retains the earlier file and imports explicitly changed monitoring preferences. It is development tooling and is excluded from the store ZIP. Disable the earlier prototype before activating Fleetbar to avoid duplicate indicators.
