@@ -23,6 +23,7 @@ Do not change the UUID after publishing. Do not add Shell versions without testi
 5. Run `./scripts/package.sh`. Review its ZIP inventory. It must contain only runtime GJS, schema XML, styles, translations and license/privacy material. The verifier rejects private-key blocks, home paths, IP addresses and any identifiers listed in the git-ignored `scripts/private-ids.local`.
 6. Run the Shexli analyzer from the upload page (`pip install shexli`) on the ZIP; it reports packaging and review-guideline findings early. If a fresh install crashes in tree-sitter 0.26, installing `tree-sitter==0.23.2` and `tree-sitter-javascript==0.23.1` over it is a working combination.
 7. Review the code and the current [GNOME review guidelines](https://gjs.guide/extensions/review-guidelines/review-guidelines.html), especially the authorship/code-understanding policy. The account owner must understand and be able to explain the implementation. Automated checks do not establish store acceptance.
+8. Run `bash scripts/audit-public.sh` and resolve every finding before pushing to a public remote. It scans the working tree, the full history and the commit messages for private terms, secrets, personal paths, emails and addresses. Keep the git-ignored `scripts/private-ids.local` current with maintainer-specific identifiers.
 
 ## Before submitting
 
@@ -32,7 +33,7 @@ Inspect the generic native screenshots under `docs/screenshots/`, update listing
 
 The verified ZIP was uploaded through the GNOME Extensions website on 2026-10-17 (https://extensions.gnome.org/extension/11330/fleetbar/). Review and approval belong to the GNOME extension reviewers; this project does not claim to be approved or published. While the first version is pending review, the page is visible only to the signed-in maintainer, and no public listing exists yet.
 
-A leftover project name was found in the Spanish catalog after the first upload. The catalog was corrected on 2026-10-17 and the ZIP was rebuilt (SHA-256 `b9d14357da3b2dc8a1352c2cc985cc08877f6c28af7c6df0e40bc5b0ad33817d`). Upload the corrected artifact from the same listing page so the reviewed files match the repository.
+A leftover project name was found in the Spanish catalog after the first upload. The catalog was corrected on 2026-10-17, the ZIP was rebuilt (SHA-256 `b9d14357da3b2dc8a1352c2cc985cc08877f6c28af7c6df0e40bc5b0ad33817d`), and the corrected artifact was uploaded from the same listing page so the reviewed files match the repository.
 
 ## Migration from the earlier prototype
 
