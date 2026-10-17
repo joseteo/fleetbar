@@ -239,7 +239,7 @@ msgid "Reachable"
 msgstr "Accesible"
 
 msgid "Reads a local service monitor. Results older than two minutes become unknown."
-msgstr "Lee los resultados del monitor local. Pasados dos minutos sin actualizar, el estado pasa a desconocido."
+msgstr "Lee los resultados de un monitor local. Los resultados con más de dos minutos de antigüedad pasan a desconocido."
 
 msgid "Recovered"
 msgstr "Recuperado"

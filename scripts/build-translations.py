@@ -69,7 +69,7 @@ translations = {
     'Checks connectivity only. An open port does not prove the application is healthy.': 'Solo comprueba la conectividad. Un puerto abierto no garantiza que la aplicación funcione.',
     'Host': 'Servidor',
     'Port': 'Puerto',
-    'Reads a local service monitor. Results older than two minutes become unknown.': 'Lee los resultados del monitor local. Pasados dos minutos sin actualizar, el estado pasa a desconocido.',
+    'Reads a local service monitor. Results older than two minutes become unknown.': 'Lee los resultados de un monitor local. Los resultados con más de dos minutos de antigüedad pasan a desconocido.',
     'Monitor state file': 'Archivo de estado del monitor',
     'Probe name': 'Nombre de la comprobación',
     'Enter a service name and valid connection details': 'Introduce un nombre de servicio y datos de conexión válidos',
