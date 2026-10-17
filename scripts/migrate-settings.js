@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
-import {readProjects, saveProjects, configPath} from '../lib/config.js';
+import {readProjects, saveProjects} from '../lib/configFile.js';
+import {configPath} from '../lib/config.js';
 import {validateProjects} from '../lib/model.js';
 
 const legacy = Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(), 'gnome-servers', 'projects.json']));

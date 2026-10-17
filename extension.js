@@ -112,10 +112,10 @@ export default class FleetbarExtension extends Extension {
 
     disable() {
         this._runId++;
-        for (const timer of [this._timer, this._reloadTimer]) {
-            if (timer)
-                GLib.Source.remove(timer);
-        }
+        if (this._timer)
+            GLib.Source.remove(this._timer);
+        if (this._reloadTimer)
+            GLib.Source.remove(this._reloadTimer);
         this._timer = 0;
         this._reloadTimer = 0;
         this._configCancellable?.cancel();
@@ -133,6 +133,14 @@ export default class FleetbarExtension extends Extension {
         this._notificationSource = null;
         this._indicators?.destroy();
         this._indicators = null;
+        this._panelIcon?.destroy();
+        this._panelIcon = null;
+        this._count?.destroy();
+        this._count = null;
+        this._summary?.destroy();
+        this._summary = null;
+        this._lastCheck?.destroy();
+        this._lastCheck = null;
         this._button?.menu.disconnectObject(this);
         this._button?.destroy();
         this._button = null;
@@ -141,10 +149,6 @@ export default class FleetbarExtension extends Extension {
         this._serviceRows = null;
         this._projectRows = null;
         this._checkedAt = null;
-        this._panelIcon = null;
-        this._count = null;
-        this._summary = null;
-        this._lastCheck = null;
         this._refreshAction = null;
     }
 

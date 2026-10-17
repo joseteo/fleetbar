@@ -1,5 +1,5 @@
 import Gio from 'gi://Gio';
-import {saveProjects} from '../lib/config.js';
+import {saveProjects} from '../lib/configFile.js';
 
 if (ARGV.length !== 1)
     throw new Error('Usage: import-config.js projects.json');

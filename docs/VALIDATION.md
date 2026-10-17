@@ -1,4 +1,4 @@
-# Validation, 2026-10-16
+# Validation, 2026-10-17
 
 Fleetbar 1.2.0 was verified on GNOME Shell 46 / Ubuntu 24.04.
 
@@ -9,5 +9,6 @@ Fleetbar 1.2.0 was verified on GNOME Shell 46 / Ubuntu 24.04.
 - Native Libadwaita project and monitoring preferences render, including Spanish text, the optional top bar label, the status color dropdown and the service status switch.
 - The migrated private installation is active. All 16 checks across the owner's three projects passed the read-only live audit.
 - Runtime ZIP inventory and private-data checks pass. No production configuration, tests, npm dependencies or development scripts are included.
+- Shexli 0.2.1, the analyzer the upload page suggests, reports no findings on the built ZIP. Shell-reachable code contains no synchronous file IO; blocking configuration access lives in a preferences-only module.
 
-Only GNOME 46 is claimed. The public source/support URL remains unset until supplied by the maintainer. Store acceptance has not been established; code understanding/ownership review and GNOME's submission review remain required. Generic UI captures are in `screenshots/`.
+Only GNOME 46 is claimed. The public source URL is declared in `metadata.json` and must be publicly readable when reviewers inspect the submission. Store acceptance has not been established; code understanding/ownership review and GNOME's submission review remain required. Generic UI captures are in `screenshots/`.

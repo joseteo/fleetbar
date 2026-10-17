@@ -4,7 +4,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk?version=4.0';
 import Gettext from 'gettext';
-import {readProjects, saveProjects} from '../lib/config.js';
+import {readProjects, saveProjects} from '../lib/configFile.js';
 import {validateProjects, formatHealthValue, parseHealthValue} from '../lib/model.js';
 
 const _ = Gettext.domain('fleetbar').gettext;

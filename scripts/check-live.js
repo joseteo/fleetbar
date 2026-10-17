@@ -1,5 +1,5 @@
 import GLib from 'gi://GLib';
-import {readProjects} from '../lib/config.js';
+import {readProjects} from '../lib/configFile.js';
 import {Checker} from '../lib/checker.js';
 import {aggregate} from '../lib/model.js';
 

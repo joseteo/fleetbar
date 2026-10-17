@@ -21,7 +21,8 @@ Do not change the UUID after publishing. Do not add Shell versions without testi
 3. Inspect healthy, degraded, offline, unknown, empty and malformed-configuration states. Check long names, compact labels, theme changes and text scaling.
 4. Verify disable/re-enable and cancellation with checks in flight. Extension-owned timers, signals, file monitors, requests, notification sources and actors must be released.
 5. Run `./scripts/package.sh`. Review its ZIP inventory. It must contain only runtime GJS, schema XML, styles, translations and license/privacy material. The verifier rejects private-key blocks, home paths, IP addresses and any identifiers listed in the git-ignored `scripts/private-ids.local`.
-6. Review the code and the current [GNOME review guidelines](https://gjs.guide/extensions/review-guidelines/review-guidelines.html), especially the authorship/code-understanding policy. The account owner must understand and be able to explain the implementation. Automated checks do not establish store acceptance.
+6. Run the Shexli analyzer from the upload page (`pip install shexli`) on the ZIP; it reports packaging and review-guideline findings early. If a fresh install crashes in tree-sitter 0.26, installing `tree-sitter==0.23.2` and `tree-sitter-javascript==0.23.1` over it is a working combination.
+7. Review the code and the current [GNOME review guidelines](https://gjs.guide/extensions/review-guidelines/review-guidelines.html), especially the authorship/code-understanding policy. The account owner must understand and be able to explain the implementation. Automated checks do not establish store acceptance.
 
 ## Before submitting
 
