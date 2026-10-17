@@ -23,6 +23,6 @@ Requires GNOME 46. SSH shortcuts use GNOME Terminal and OpenSSH. Configure your 
 
 **License:** GPL-2.0-or-later
 
-**Homepage / issues:** set the verified public source repository URL in `metadata.json` before publishing.
+**Homepage / issues:** the public source repository URL is declared in `metadata.json` (`https://github.com/joseteo/fleetbar`), and the repository is public with issues open.
 
-**Screenshots:** use the native captures under `docs/screenshots/`. These show synthetic example projects rather than the owner's configured infrastructure. Include both light and dark menu captures and the top bar outage view.
+**Screenshots:** use the native captures under `docs/screenshots/`. These show synthetic example projects rather than the owner's configured infrastructure: the top bar views (`panel-healthy`, `panel-outage`, `panel-unknown`, `panel-compact`), the light and dark menus (`menu-light`, `menu-dark`), and the monitoring preferences in English and Spanish (`monitoring-en`, `monitoring-es`).
